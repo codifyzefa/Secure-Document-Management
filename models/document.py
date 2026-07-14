@@ -59,7 +59,8 @@ class Document(BaseModel):
     """An encrypted document with integrity and sharing metadata.
 
     Attributes:
-        document_id:        Unique identifier (UUID4 hex).
+        document_id:        Sequential document identifier
+                            (e.g. ``DOC-0001``).
         original_filename:  User-visible filename before encryption.
         encrypted_filename: Filename used on disk after encryption.
         owner_id:           ``user_id`` of the document owner.

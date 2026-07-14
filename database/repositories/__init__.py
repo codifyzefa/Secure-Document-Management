@@ -9,12 +9,14 @@ from __future__ import annotations
 
 from database.repositories.audit_repository import AuditRepository
 from database.repositories.base import BaseRepository
+from database.repositories.counter_repository import CounterRepository
 from database.repositories.document_repository import DocumentRepository
 from database.repositories.user_repository import UserRepository
 
 __all__: list[str] = [
     "AuditRepository",
     "BaseRepository",
+    "CounterRepository",
     "DocumentRepository",
     "UserRepository",
 ]

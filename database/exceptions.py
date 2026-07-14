@@ -26,5 +26,9 @@ class CollectionNotInitialisedError(DatabaseError):
     """Raised when a repository method is called before the collection exists."""
 
 
+class CounterError(DatabaseError):
+    """Raised when a counter operation (sequence generation) fails."""
+
+
 class IndexCreationError(DatabaseError):
     """Raised when index creation in MongoDB fails."""

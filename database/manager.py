@@ -158,9 +158,12 @@ class DatabaseManager:
             IndexCreationError: If any index creation fails.
         """
         try:
+            counters: Collection = self.get_collection("counters")
             users: Collection = self.get_collection("users")
             documents: Collection = self.get_collection("documents")
             audit_logs: Collection = self.get_collection("audit_logs")
+
+            # Counters — _id is auto-indexed by MongoDB
 
             # Users indexes
             users.create_index("user_id", unique=True, name="idx_user_id")

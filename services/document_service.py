@@ -20,7 +20,7 @@ from typing import Any
 from crypto.aes_cipher import AESCipher
 from crypto.base64_utils import b64_encode
 from crypto.hashing import SHA256Hasher
-from crypto.key_generator import generate_aes_key, generate_crypto_id, generate_iv
+from crypto.key_generator import generate_aes_key, generate_iv
 from crypto.rsa_cipher import RSACipher
 from database.repositories.document_repository import DocumentRepository
 from exceptions.custom_exceptions import (
@@ -30,6 +30,7 @@ from exceptions.custom_exceptions import (
 )
 from logger.logging_config import get_logger
 from models.document import Document
+from services.document_id_service import DocumentIDService
 from services.session_manager import SessionManager
 from storage.manager import StorageManager
 
@@ -53,6 +54,7 @@ class DocumentUploadService:
         self._storage_mgr: StorageManager = StorageManager()
         self._doc_repo: DocumentRepository = DocumentRepository()
         self._hasher: SHA256Hasher = SHA256Hasher()
+        self._doc_id_service: DocumentIDService = DocumentIDService()
 
     # ------------------------------------------------------------------
     # Public API
@@ -107,7 +109,7 @@ class DocumentUploadService:
             mimetypes.guess_type(original_filename)[0]
             or "application/octet-stream"
         )
-        document_id: str = generate_crypto_id()
+        document_id: str = self._doc_id_service.generate_document_id()
         encrypted_filename: str = f"{document_id}{ENCRYPTED_FILE_SUFFIX}"
 
         try:

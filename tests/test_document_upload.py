@@ -137,7 +137,7 @@ class TestDocumentUploadServiceSuccess:
 
             assert "document_id" in result
             assert result["document_id"]
-            assert len(result["document_id"]) == 32  # UUID4 hex
+            assert result["document_id"].startswith("DOC-")
 
             assert result["original_filename"] == Path(file_path).name
             assert result["file_size"] == len(
