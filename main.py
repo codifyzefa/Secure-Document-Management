@@ -3,11 +3,10 @@
 
 This is the application entry point. It loads configuration, initialises
 the logging and database subsystems, verifies the storage directories,
-and launches the modern GUI.
+and launches the CLI.
 
 Usage:
-    python main.py          Launch the GUI (default)
-    python main.py --cli    Launch the CLI (legacy)
+    python main.py          Launch the CLI
 """
 
 from __future__ import annotations
@@ -41,29 +40,9 @@ def main() -> None:
     storage_mgr = StorageManager()
     storage_mgr.initialise()
 
-    if "--cli" in sys.argv:
-        from cli.main import display_welcome, run_cli
-        display_welcome()
-        run_cli()
-    else:
-        from controllers.auth_controller import AuthController
-        from controllers.document_controller import DocumentController
-        from controllers.audit_controller import AuditController
-        from controllers.face_controller import FaceController
-        from gui.app import SDMSApp
-
-        auth_ctrl = AuthController()
-        doc_ctrl = DocumentController()
-        audit_ctrl = AuditController()
-        face_ctrl = FaceController()
-
-        app = SDMSApp(controller={
-            "auth": auth_ctrl,
-            "document": doc_ctrl,
-            "audit": audit_ctrl,
-            "face": face_ctrl,
-        })
-        app.mainloop()
+    from cli.main import display_welcome, run_cli
+    display_welcome()
+    run_cli()
 
     db_manager.disconnect()
     logger.info("%s shut down gracefully.", settings.APP_NAME)

@@ -378,8 +378,10 @@ def _handle_list_documents(doc_controller: DocumentController) -> None:
                 break
 
             total = pagination.get("total", 0)
+            cur_pg: int = pagination.get("page", 1)
+            total_pgs: int = pagination.get("total_pages", 1)
             print(
-                f"  {_bold(f'Page {pagination['page']}/{pagination['total_pages']}')}"
+                f"  {_bold(f'Page {cur_pg}/{total_pgs}')}"
                 f"  ({total} document{'s' if total != 1 else ''})"
             )
             print()
@@ -401,11 +403,6 @@ def _handle_list_documents(doc_controller: DocumentController) -> None:
         if nav == "2":
             return
         break
-
-
-# ======================================================================
-# Document Detail
-# ======================================================================
 
 
 def _handle_document_detail(doc_controller: DocumentController) -> None:
@@ -522,8 +519,9 @@ def _search_by_filename(doc_controller: DocumentController) -> None:
             total = pagination.get("total", 0)
 
             if documents:
+                _plural = 's' if total != 1 else ''
                 print(
-                    f"  {_ok(f'Found {total} document{'s' if total != 1 else ''}')}:"
+                    f"  {_ok(f'Found {total} document{_plural}')}:"
                 )
                 print()
                 _print_document_table(documents)
@@ -565,8 +563,10 @@ def _show_all_documents(doc_controller: DocumentController) -> None:
                 break
 
             total = pagination.get("total", 0)
+            _page = pagination.get("page", 1)
+            _total_pages = pagination.get("total_pages", 1)
             print(
-                f"  {_bold(f'Page {pagination['page']}/{pagination['total_pages']}')}"
+                f"  {_bold(f'Page {_page}/{_total_pages}')}"
                 f"  ({total} document{'s' if total != 1 else ''})"
             )
             print()
@@ -708,8 +708,10 @@ def _handle_shared_documents(doc_controller: DocumentController) -> None:
                 break
 
             total = pagination.get("total", 0)
+            _page = pagination.get("page", 1)
+            _total_pages = pagination.get("total_pages", 1)
             print(
-                f"  {_bold(f'Page {pagination['page']}/{pagination['total_pages']}')}"
+                f"  {_bold(f'Page {_page}/{_total_pages}')}"
                 f"  ({total} document{'s' if total != 1 else ''})"
             )
             print()
@@ -968,8 +970,9 @@ def _handle_audit_search(audit_controller: AuditController) -> None:
                 current_page: int = result.get("page", 1)
                 total_pages: int = result.get("total_pages", 1)
                 total: int = result.get("total", 0)
+                _plural_log = 's' if total != 1 else ''
                 print(
-                    f"  {_ok(f'Found {total} log{'s' if total != 1 else ''}')}"
+                    f"  {_ok(f'Found {total} log{_plural_log}')}"
                     f" (page {current_page}/{total_pages})"
                 )
                 print()
